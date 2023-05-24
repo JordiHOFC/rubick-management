@@ -1,5 +1,6 @@
 package br.com.github.jordihofc.shared.errorhandling;
 
+import br.com.github.jordihofc.consultaformaspagamento.EntityNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 import org.zalando.problem.ProblemBuilder;
@@ -24,12 +25,25 @@ public class GlobalExceptionHandler implements ProblemHandling {
     /**
      * Prints a better detail message when catching a <code>ResponseStatusException</code>
      */
+//    @Override
+//    public ProblemBuilder prepare(Throwable throwable, StatusType status, URI type) {
+//        ProblemBuilder builder = ProblemHandling.super.prepare(throwable, status, type);
+//        if (throwable instanceof ResponseStatusException exception) {
+//            return builder
+//                    .withDetail(exception.getReason()); // it's better than exception.getMessage()
+//        }
+//        return builder;
+//    }
+
+    /**
+     * Prints a better detail message when catching a <code>EntityNotFoundException</code>
+     */
     @Override
     public ProblemBuilder prepare(Throwable throwable, StatusType status, URI type) {
         ProblemBuilder builder = ProblemHandling.super.prepare(throwable, status, type);
-        if (throwable instanceof ResponseStatusException exception) {
+        if (throwable instanceof EntityNotFoundException exception) {
             return builder
-                    .withDetail(exception.getReason()); // it's better than exception.getMessage()
+                    .withDetail(exception.getMessage()); // it's better than exception.getMessage()
         }
         return builder;
     }

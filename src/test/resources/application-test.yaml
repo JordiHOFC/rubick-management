@@ -1,19 +1,42 @@
-##
-# Spring Application
-##
+# Banco de dados
 spring:
-    ##
-    # DataSource and JPA/Hibernate (PostgreSQL)
-    ##
-    datasource:
-        driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
-        url: jdbc:tc:postgresql:14.5:////test_db
-    ##
-    # Jackson
-    # https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.spring-mvc.customize-jackson-objectmapper
-    # https://www.baeldung.com/spring-boot-customize-jackson-objectmapper
-    # https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperBuilder.html
-    ##
-    jackson:
-        serialization:
-            indent_output: true
+  ##
+  # DataSource and JPA/Hibernate (PostgreSQL)
+  ##
+  datasource:
+    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:postgresql:14.5:////test_db
+    initialization-mode: always
+  jpa:
+    defer-datasource-initialization: true
+    generate-ddl: ${GENERATION_DDL:true}
+    show-sql: ${SHOW_SQL:true}
+    properties:
+      hibernate:
+        format_sql: true
+        ddl-auto: ${DDL_MODE:create}
+        cache:
+          use_second_level_cache: ${CACHE_SECOND_LEVEL:true}
+          use_query_cache: ${CACHE_QUERIES:true}
+          region.factory_class: ${REGION_CACHE:org.hibernate.cache.jcache.JCacheRegionFactory}
+        generate_statistics: false
+
+
+#apis
+pedido.api.url: http://localhost:8080/api/pedidos
+
+
+#feign config
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 15000
+        readTimeout: 5000
+
+##
+# Book Client config
+##
+api:
+  book:
+    url: ${BOOK_URL:localhost:19090/api/books}
