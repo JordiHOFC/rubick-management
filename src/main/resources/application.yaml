@@ -67,6 +67,10 @@ spring:
             add-mappings: false
     mvc:
         throw-exception-if-no-handler-found: true
+    cache:
+        cache-names: forma_de_pagamento_entre
+        caffeine.spec: maximumSize = 100000, expireAfterWrite = 4h
+
 
 ##
 # Spring Actuator
