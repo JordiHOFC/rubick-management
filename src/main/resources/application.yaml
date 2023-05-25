@@ -68,6 +68,16 @@ spring:
     mvc:
         throw-exception-if-no-handler-found: true
 
+
+    redis:
+        host: ${HOST:localhost}
+        port: ${PORT:6379}
+        password: ${PASSWORD:password}
+    cache:
+        type: redis
+        cache-names: forma_de_pagamento_entre
+
+
 ##
 # Spring Actuator
 # https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.endpoints
